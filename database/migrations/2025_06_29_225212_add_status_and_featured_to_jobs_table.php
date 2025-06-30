@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->integer('status')->default(1)->after('company_website');
-            $table->integer('isFeatured')->after('status')->default(0);
+            //
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->dropColumn('status');
-            $table->dropColumn('isFeatured');
+            //
         });
     }
 };

@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('job_applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('employer_id')->constrained('users')->onDelete('cascade');
-            $table->timestamp('applied_date');
+            $table->unsignedBigInteger('job_id');
+            $table->unsignedBigInteger('user_id');
+            $table->text('message')->nullable();
             $table->timestamps();
+
+            // Vérifie que ces tables existent dans tes migrations
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('utilisateurs')->onDelete('cascade');
         });
     }
 

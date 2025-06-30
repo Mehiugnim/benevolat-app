@@ -82,3 +82,7 @@ Route::group(['prefix' => 'account'], function(){
     });
 
 });
+
+use App\Http\Controllers\ProjetController;
+
+Route::get('/projets', [ProjetController::class, 'index']);

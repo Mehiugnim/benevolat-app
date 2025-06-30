@@ -6,24 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->foreignId('user_id')->after('job_type_id')->constrained()->onDelete('cascade');
+            $table->boolean('isFeatured')->default(false);
+            $table->unsignedBigInteger('category_id')->nullable();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->dropForeign(['category_id']);
+            $table->dropColumn('isFeatured');
+            $table->dropColumn('category_id');
         });
     }
 };
