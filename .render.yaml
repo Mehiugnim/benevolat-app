@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: benevolat-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: dpg-d1h4n1jipnbc73bdgjg0-a
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: benevolat_db
+      - key: DB_USERNAME
+        value: benevolat_db_user
+      - key: DB_PASSWORD
+        value: 4dDK5wLJ7hEE0ek6hddvrcfTPMLk2uE0
