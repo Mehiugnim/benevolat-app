@@ -18,18 +18,19 @@ COPY . /var/www/html
 # Définit le dossier de travail
 WORKDIR /var/www/html
 
-# Droits sur les dossiers nécessaires
+# Donne les bons droits à Laravel
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
 # Installe les dépendances Laravel
 RUN composer install --optimize-autoloader --no-interaction
 
-# Cache la configuration
-RUN php artisan config:clear && php artisan config:cache
+# Supprime les commandes artisan qui nécessitent .env lors du build
+# Ces commandes seront exécutées dynamiquement au démarrage du conteneur
+# Render fournira les variables comme APP_KEY, DB_HOST, etc.
 
-# Génére la clé d'application
-RUN php artisan key:generate
-
-# Ouvre le port 80
+# Expose le port par défaut
 EXPOSE 80
+
+# Commande exécutée au lancement (PAS pendant le build !)
+CMD php artisan config:cache && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=80
